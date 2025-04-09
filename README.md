@@ -63,6 +63,18 @@ For Claude models provided by Amazon Bedrock, please install these additional pa
 </code></pre>
 Next, specify a set of valid [AWS Credentials](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-envvars.html) and the target [AWS Region](https://docs.aws.amazon.com/bedrock/latest/userguide/bedrock-regions.html) by setting the environment variables: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION_NAME`.
 
+#### OpenRouter Models
+
+The system supports multiple models through OpenRouter, including:
+- Anthropic: claude-3-opus, claude-3-sonnet, claude-3-haiku
+- OpenAI: gpt-4, gpt-4-turbo
+- Google: palm-2-chat-bison
+- Meta: llama-2-70b-chat
+
+To use OpenRouter models, set the `OPENROUTER_API_KEY` environment variable:
+<pre><code>export OPENROUTER_API_KEY="YOUR KEY HERE"
+</code></pre>
+
 #### Semantic Scholar API (Literature Search)
 
 Our code can also optionally use a Semantic Scholar API Key (`S2_API_KEY`) for higher throughput [if you have one](https://www.semanticscholar.org/product/api), though it should work without it in principle. If you have problems with Semantic Scholar, you can skip the literature search and citation phases of paper generation.

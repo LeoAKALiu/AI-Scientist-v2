@@ -21,7 +21,15 @@ AVAILABLE_LLMS = [
     "o1-mini-2024-09-12",
     "o3-mini",
     "deepseek-coder-v2-0724",
+    # OpenRouter models
     "llama3.1-405b",
+    "openrouter/anthropic/claude-3-opus",
+    "openrouter/anthropic/claude-3-sonnet",
+    "openrouter/anthropic/claude-3-haiku",
+    "openrouter/openai/gpt-4",
+    "openrouter/openai/gpt-4-turbo",
+    "openrouter/google/palm-2-chat-bison",
+    "openrouter/meta-llama/llama-2-70b-chat",
     # Anthropic Claude models via Amazon Bedrock
     "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
     "bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0",
@@ -348,8 +356,20 @@ def create_client(model) -> tuple[Any, str]:
             ),
             model,
         )
+    elif model.startswith("openrouter/"):
+        print(f"Using OpenRouter API with model {model}.")
+        # OpenRouter models follow format: openrouter/provider/model-name
+        # We need to extract the actual model name for API calls
+        actual_model = model.split("/", 2)[-1]  # Gets everything after openrouter/
+        return (
+            openai.OpenAI(
+                api_key=os.environ["OPENROUTER_API_KEY"],
+                base_url="https://openrouter.ai/api/v1",
+            ),
+            actual_model,
+        )
     elif model == "llama3.1-405b":
-        print(f"Using OpenAI API with {model}.")
+        print(f"Using OpenRouter API with {model}.")
         return (
             openai.OpenAI(
                 api_key=os.environ["OPENROUTER_API_KEY"],
